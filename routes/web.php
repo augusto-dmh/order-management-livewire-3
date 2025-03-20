@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CategoriesList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,4 +24,8 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-require __DIR__.'/auth.php';
+Route::get('categories', CategoriesList::class)
+    ->middleware(['auth'])
+    ->name('categories.index');
+
+require __DIR__ . '/auth.php';
