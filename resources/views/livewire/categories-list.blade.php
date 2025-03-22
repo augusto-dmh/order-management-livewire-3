@@ -10,7 +10,7 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
-                    <x-primary-button class="mb-4" x-data="" @click="$dispatch('open-modal', 'add-category')">
+                    <x-primary-button class="mb-4">
                         Add Category
                     </x-primary-button>
 
@@ -75,5 +75,4 @@
             </div>
         </div>
     </div>
-    <x-categories-list-modal />
 </div>
