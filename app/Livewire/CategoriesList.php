@@ -18,9 +18,18 @@ class CategoriesList extends Component
 
     public bool $showModal = false;
 
+    public array $active = [];
+
     public function openModal(): void
     {
         $this->showModal = true;
+    }
+
+    public function toggleIsActive(int $categoryId): void
+    {
+        Category::where('id', $categoryId)->update([
+            'is_active' => $this->active[$categoryId],
+        ]);
     }
 
     public function save()
@@ -48,6 +57,10 @@ class CategoriesList extends Component
     public function render()
     {
         $categories = Category::paginate(10);
+
+        $this->active = $categories->mapWithKeys(
+            fn(Category $item) => [$item['id'] => (bool) $item['is_active']],
+        )->toArray();
 
         return view('livewire.categories-list', [
             'categories' => $categories,
