@@ -52,30 +52,9 @@
                                             {{ $category->slug }}
                                         </td>
                                         <td class="px-6">
-                                            <div class="relative inline-block w-12 mr-2 align-middle transition duration-200 ease-in select-none">
-                                                <input
-                                                    type="checkbox"
-                                                    id="is-active-{{ $category->id }}"
-                                                    wire:key="is-active-{{ $category->id }}"
-                                                    wire:click="activeToggle({{ $category }})"
-                                                    wire:loading.attr="disabled"
-                                                    {{ $category->is_active ? 'checked' : '' }}
-                                                    class="sr-only peer"
-                                                />
-                                                <label
-                                                    for="is-active-{{ $category->id }}"
-                                                    class="block h-6 overflow-hidden rounded-full cursor-pointer
-                                                           peer-checked:bg-green-400 bg-gray-300
-                                                           after:content-[''] after:absolute after:top-[2px] after:left-[2px]
-                                                           after:bg-white after:rounded-full after:h-5 after:w-5
-                                                           after:transition-all peer-checked:after:translate-x-6 peer-checked:after:bg-green-700"
-                                                ></label>
-
-                                                @if($category->is_active)
-                                                    <svg class="absolute w-3 h-3 text-white transform -translate-y-1/2 pointer-events-none top-1/2 right-1.5 z-10" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                @endif
+                                            <div class="relative inline-block w-10 mr-2 align-middle transition duration-200 ease-in select-none">
+                                                <input type="checkbox" name="toggle" class="absolute block w-6 h-6 bg-white border-4 rounded-full appearance-none cursor-pointer focus:outline-none toggle-checkbox" />
+                                                <label for="toggle" class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer toggle-label"></label>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
