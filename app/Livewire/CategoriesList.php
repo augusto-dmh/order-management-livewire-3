@@ -23,6 +23,11 @@ class CategoriesList extends Component
         $this->showModal = true;
     }
 
+    public function activeToggle(Category $category)
+    {
+        $category->update(['is_active' => !$category->is_active]);
+    }
+
     public function save()
     {
         $this->validate();
