@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $country,
             'slug' => Str::slug($country),
+            'position' => Category::max('position') + 1,
         ];
     }
 }
