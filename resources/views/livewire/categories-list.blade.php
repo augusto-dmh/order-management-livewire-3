@@ -45,24 +45,12 @@
                                                 </svg>
                                             </button>
                                         </td>
-                                        {{-- Table cells holding category's `name` or `slug` in edit mode off/on --}}
-                                        @if($categoryInEditMode?->id !== $category->id)
-                                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                                {{ $category->name }}
-                                            </td>
-                                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                                {{ $category->slug }}
-                                            </td>
-                                        @else
-                                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                                <input wire:model.live.debounce.1000ms="editCategoryForm.name"
-                                                       class="w-full py-2 pl-2 pr-4 text-sm border border-gray-400 rounded-lg focus:outline-none focus:border-blue-400" />
-                                            </td>
-                                            <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                                <input wire:model.live.debounce="editCategoryForm.slug"
-                                                    class="w-full py-2 pl-2 pr-4 text-sm border border-gray-400 rounded-lg focus:outline-none focus:border-blue-400" />
-                                            </td>
-                                        @endif
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                            {{ $category->name }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                            {{ $category->slug }}
+                                        </td>
                                         <td class="px-6">
                                             <div class="relative inline-block w-10 mr-2 align-middle transition duration-200 ease-in select-none">
                                                 <input wire:model="active.{{ $category->id }}" wire:click="toggleIsActive({{ $category->id }})" type="checkbox" name="toggle" id="{{ $loop->index.$category->id }}" class="absolute block w-6 h-6 bg-white border-4 rounded-full appearance-none cursor-pointer focus:outline-none toggle-checkbox" />
@@ -70,22 +58,12 @@
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                            {{-- Table actions buttons in edit mode off/on --}}
-                                            @if($categoryInEditMode?->id !== $category->id)
-                                                <x-primary-button wire:click="toggleCategoryInEditMode({{ $category }})">
-                                                    Edit
-                                                </x-primary-button>
-                                                <button class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
-                                                    Delete
-                                                </button>
-                                            @else
-                                                <x-primary-button wire:click="updateCategoryInEditMode({{ $category }})">
-                                                    Save
-                                                </x-primary-button>
-                                                <x-primary-button wire:click="toggleCategoryInEditMode()">
-                                                    Cancel
-                                                </x-primary-button>
-                                            @endif
+                                            <x-primary-button>
+                                                Edit
+                                            </x-primary-button>
+                                            <button class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -113,7 +91,7 @@
                         <label class="block text-sm font-medium text-gray-700" for="name">
                             Name
                         </label>
-                        <input wire:model.live.debounce.1000ms="addCategoryForm.name" id="name"
+                        <input wire:model.live.debounce="name" id="name"
                                class="w-full py-2 pl-2 pr-4 mt-2 text-sm border border-gray-400 rounded-lg sm:text-base focus:outline-none focus:border-blue-400" />
                         @error('name')
                             <span class="text-sm text-red-500">{{ $message }}</span>
@@ -123,7 +101,7 @@
                         <label class="block text-sm font-medium text-gray-700" for="slug">
                             Slug
                         </label>
-                        <input wire:model.live.="addCategoryForm.slug" id="slug"
+                        <input wire:model="slug" id="slug"
                                class="w-full py-2 pl-2 pr-4 mt-2 text-sm border border-gray-400 rounded-lg sm:text-base focus:outline-none focus:border-blue-400" />
                         @error('slug')
                             <span class="text-sm text-red-500">{{ $message }}</span>
