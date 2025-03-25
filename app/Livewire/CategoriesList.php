@@ -12,16 +12,22 @@ class CategoriesList extends Component
 {
     use WithPagination;
 
-    public ?Category $category = null;
-
-    public string $name = '';
-    public string $slug = '';
+    public array $addCategoryForm  = [
+        'name' => '',
+        'slug' => '',
+    ];
 
     public Collection $categories;
 
     public bool $showModal = false;
 
     public array $active;
+
+    public ?Category $categoryInEditMode;
+    public array $editCategoryForm = [
+        'name' => '',
+        'slug' => '',
+    ];
 
     public int $editedCategoryId = 0;
 
@@ -34,11 +40,38 @@ class CategoriesList extends Component
         $this->showModal = true;
     }
 
+    public function toggleCategoryInEditMode(?Category $category = null): void
+    {
+        $this->categoryInEditMode = $category;
+        $this->editCategoryForm['name'] = $category?->name;
+        $this->editCategoryForm['slug'] = $category?->slug;
+    }
+
     public function toggleIsActive(int $categoryId): void
     {
         Category::where('id', $categoryId)->update([
             'is_active' => $this->active[$categoryId],
         ]);
+    }
+
+    public function updateCategoryInEditMode(Category $category): void
+    {
+        $this->validate([
+            'editCategoryForm.name' => ['required', 'string', 'min:3'],
+            'editCategoryForm.slug' => ['nullable', 'string'],
+        ]);
+
+        $category->update([
+            'name' => $this->editCategoryForm['name'],
+            'slug' => $this->editCategoryForm['slug'],
+        ]);
+
+        $this->categoryInEditMode = null;
+    }
+
+    public function updatedEditCategoryFormName(): void
+    {
+        $this->editCategoryForm['slug'] = Str::slug($this->editCategoryForm['name']);
     }
 
     public function updateOrder($list)
@@ -55,33 +88,32 @@ class CategoriesList extends Component
 
     public function save()
     {
-        $this->validate();
+        $this->validate([
+            'addCategoryForm.name' => ['required', 'string', 'min:3'],
+            'addCategoryForm.slug' => ['nullable', 'string'],
+        ]);
 
         $position = Category::max('position') + 1;
-        Category::create(array_merge($this->only('name', 'slug'), ['position' => $position]));
+        Category::create([
+            'name' => $this->addCategoryForm['name'],
+            'slug' => $this->addCategoryForm['slug'],
+            'position' => $position,
+        ]);
 
-        $this->reset('name', 'slug', 'showModal');
+        $this->reset('addCategoryForm', 'showModal');
     }
 
-    public function updatedName(): void
+    public function updatedAddCategoryFormName(): void
     {
-        $this->slug = Str::slug($this->name);
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'name' => ['required', 'string', 'min:3'],
-            'slug' => ['nullable', 'string'],
-        ];
+        $this->addCategoryForm['slug'] = Str::slug($this->addCategoryForm['name']);
     }
 
     public function render()
     {
-        $cats = Category::orderBy('position')->paginate($this->perPage);
+        $cats = Category::orderBy('position', 'desc')->paginate($this->perPage);
         $links = $cats->links();
         $this->currentPage = $cats->currentPage();
-        $this->categories = collect($cats->items());
+        $this->categories = collect($cats->items())->keyBy('id');
 
         $this->active = $this->categories->mapWithKeys(
             fn(Category $item) => [$item['id'] => (bool) $item['is_active']],
