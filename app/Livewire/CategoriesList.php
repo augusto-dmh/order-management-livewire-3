@@ -25,8 +25,6 @@ class CategoriesList extends Component
 
     public int $editedCategoryId = 0;
 
-    public ?int $categoryToBeDeletedId = null;
-
     public int $currentPage = 1;
 
     public int $perPage = 10;
@@ -34,22 +32,6 @@ class CategoriesList extends Component
     public function openModal(): void
     {
         $this->showModal = true;
-    }
-
-    public function deleteCategory(int $categoryId): void
-    {
-        $categoryToBeDeleted = Category::find($categoryId);
-
-        if ($categoryToBeDeleted) {
-            $categoryToBeDeleted->delete();
-        }
-
-        $this->cancelCategoryDeletion();
-    }
-
-    public function cancelCategoryDeletion(): void
-    {
-        $this->reset('categoryToBeDeletedId');
     }
 
     public function toggleIsActive(int $categoryId): void

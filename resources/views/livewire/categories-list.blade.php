@@ -88,7 +88,7 @@
                                                 <x-primary-button wire:click="editCategory({{ $category->id }})">
                                                     Edit
                                                 </x-primary-button>
-                                                <button wire:click="$set('categoryToBeDeletedId', {{ $category->id }})" class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
+                                                <button class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
                                                     Delete
                                                 </button>
                                             @endif
@@ -145,41 +145,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div
-        class="@if (!$categoryToBeDeletedId) hidden @endif flex items-center justify-center fixed left-0 bottom-0 w-full h-full bg-gray-800 bg-opacity-90"
-        wire:click.self="cancelCategoryDeletion"
-    >
-        <div class="p-5 text-center bg-white rounded-lg w-96">
-            <div class="flex flex-col items-center justify-center">
-                <!-- Exclamation Symbol Circle -->
-                <div class="flex items-center justify-center w-24 h-24 mb-5 bg-red-100 rounded-full">
-                    <svg class="w-16 h-16 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
-                </div>
-
-                <!-- Title -->
-                <h3 class="mb-3 text-2xl font-bold text-gray-900">Are you sure?</h3>
-
-                <!-- Description -->
-                <p class="mb-6 text-gray-700">
-                    You won't be able to revert this category deletion!
-                </p>
-
-                <!-- Buttons -->
-                <div class="flex flex-col w-full space-y-3">
-                    <button wire:click="deleteCategory({{ $categoryToBeDeletedId }})" class="w-full py-3 font-medium text-white bg-red-500 rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300" type="button">
-                        Yes, delete it!
-                    </button>
-                    <button wire:click="cancelCategoryDeletion" class="w-full py-2 font-medium text-gray-700 bg-gray-200 rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-300" type="button">
-                        Cancel
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
