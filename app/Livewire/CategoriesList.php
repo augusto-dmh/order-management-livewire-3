@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Illuminate\Support\Collection;
 
@@ -75,6 +76,23 @@ class CategoriesList extends Component
 
         $this->resetValidation();
         $this->reset('showModal', 'editedCategoryId');
+    }
+
+    public function deleteConfirm(string $method, $id = null): void
+    {
+        $this->dispatch('swal:confirm', [
+            'type'   => 'warning',
+            'title'  => 'Are you sure?',
+            'text'   => '',
+            'id'     => $id,
+            'method' => $method,
+        ]);
+    }
+
+    #[On('delete')]
+    public function delete($id)
+    {
+        Category::findOrFail($id)->delete();
     }
 
     public function cancelCategoryEdit()

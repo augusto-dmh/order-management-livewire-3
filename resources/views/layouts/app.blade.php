@@ -35,5 +35,25 @@
 
         @livewireScripts
         <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.4.1/dist/livewire-sortable.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('swal:confirm', (event) => {
+                    swal.fire({
+                        title: event[0].title,
+                        text: event[0].text,
+                        icon: event[0].type,
+                        showCancelButton: true,
+                        confirmButtonColor: 'rgb(239 68 6)',
+                        confirmButtonText: 'Yes, delete it!'
+                    })
+                        .then((willDelete) => {
+                            if (willDelete.isConfirmed) {
+                                Livewire.dispatch(event[0].method, { id: event[0].id });
+                            }
+                        });
+                })
+            });
+        </script>
     </body>
 </html>
