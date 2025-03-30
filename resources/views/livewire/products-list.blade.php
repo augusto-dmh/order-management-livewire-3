@@ -43,10 +43,10 @@
                                 <tr class="bg-gray-100">
                                     <td class="px-4 py-2"></td>
                                     <td class="px-6 py-2">
-                                        <input type="text" wire:model.live.debounce="name" placeholder="Search..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                        <input type="text" wire:model.live.debounce="searchColumns.name" placeholder="Search..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
                                     </td>
                                     <td class="px-6 py-2">
-                                        <select wire:model.live.debounce="category" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                        <select wire:model.live.debounce="searchColumns.category" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
                                             <option value="">All Categories</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -54,7 +54,7 @@
                                         </select>
                                     </td>
                                     <td class="px-6 py-2">
-                                        <select wire:model.live.debounce="country" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                        <select wire:model.live.debounce="searchColumns.country" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
                                             <option value="">All Countries</option>
                                             @foreach($countries as $country)
                                                 <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -63,8 +63,8 @@
                                     </td>
                                     <td class="px-6 py-2">
                                         <div class="flex flex-col gap-2">
-                                            <input type="number" wire:model.live.debounce="price_from" placeholder="Min" class="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                            <input type="number" wire:model.live.debounce="price_to" placeholder="Max" class="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                            <input type="number" wire:model.live.debounce="searchColumns.price.from" placeholder="Min" class="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                            <input type="number" wire:model.live.debounce="searchColumns.price.to" placeholder="Max" class="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
                                         </div>
                                     </td>
                                     <td class="px-4 py-2 text-right">
@@ -99,7 +99,7 @@
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             {{ $product->country->name }}
                                         </td>
-                                        <td class="text-sm leading-5 text-gray-900 whitespace-nowrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             ${{ number_format($product->price / 100, 2) }}
                                         </td>
                                         <td class="flex items-center justify-center gap-1 px-4 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
