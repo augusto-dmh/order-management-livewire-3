@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ProductsList;
 use App\Livewire\CategoriesList;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,9 @@ Route::view('profile', 'profile')
 Route::get('categories', CategoriesList::class)
     ->middleware(['auth'])
     ->name('categories.index');
+
+Route::get('products', ProductsList::class)
+    ->middleware(['auth'])
+    ->name('products.index');
 
 require __DIR__ . '/auth.php';
