@@ -12,9 +12,9 @@
 
                     <div class="mb-4">
                         <div class="mb-4">
-                            <a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700">
+                            <x-primary-button wire:click="" type="button">
                                 Create Product
-                            </a>
+                            </x-primary-button>
                         </div>
                     </div>
 
@@ -39,29 +39,70 @@
                                     <th class="px-6 py-3 text-left bg-gray-50">
                                     </th>
                                 </tr>
+                                <!-- Filter row -->
+                                <tr class="bg-gray-100">
+                                    <td class="px-4 py-2"></td>
+                                    <td class="px-6 py-2">
+                                        <input type="text" wire:model.live.debounce="name" placeholder="Search..." class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        <select wire:model.live.debounce="category" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                            <option value="">All Categories</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        <select wire:model.live.debounce="country" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                            <option value="">All Countries</option>
+                                            @foreach($countries as $country)
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        <div class="flex flex-col gap-2">
+                                            <input type="number" wire:model.live.debounce="price_from" placeholder="Min" class="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                            <input type="number" wire:model.live.debounce="price_to" placeholder="Max" class="w-full px-2 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-2 text-right">
+                                        <button wire:click="resetFilters" class="px-3 py-2 text-xs text-gray-600 uppercase bg-gray-200 border border-transparent rounded-md hover:bg-gray-300">
+                                            Reset
+                                        </button>
+                                    </td>
+                                </tr>
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
                                 @foreach($products as $product)
                                     <tr class="bg-white" wire:key="product-{{ $product->id }}">
-                                        <td class="px-4 py-2 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                            <input type="checkbox" value="{{ $product->id }}" wire:model.live="selected">
+                                        <td class="px-4 py-2 text-sm leading-5 text-gray-900 whitespace-nowrap">
+                                            <input type="checkbox" value="{{ $product->id }}">
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             {{ $product->name }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                            @foreach($product->categories()->take(3)->get() as $category)
-                                                <span class="px-2 py-1 text-xs text-indigo-700 bg-indigo-200 rounded-md">{{ Str::limit($category->name, 30) }}</span>
+                                        <td class="flex gap-1 px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
+                                            @foreach($product->categories()->take($categoriesPerProductToShow)->get() as $category)
+                                                <span class="px-2 py-1 text-xs text-indigo-700 bg-indigo-200 rounded-md">
+                                                    {{ Str::limit($category->name, 20) }}
+                                                </span>
                                             @endforeach
+                                            @if($product->categories()->count() - $categoriesPerProductToShow > 0)
+                                                <span class="px-2 py-1 text-xs text-indigo-700 bg-indigo-200 rounded-md">
+                                                    +{{ $product->categories()->count() - $categoriesPerProductToShow }}
+                                                </span>
+                                            @endif
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             {{ $product->country->name }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                        <td class="text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             ${{ number_format($product->price / 100, 2) }}
                                         </td>
-                                        <td>
+                                        <td class="flex items-center justify-center gap-1 px-4 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             <x-primary-button wire:click="">
                                                 Edit
                                             </x-primary-button>

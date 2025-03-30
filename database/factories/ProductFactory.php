@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
             'country_id' => Country::factory(),
-            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'price' => $this->faker->randomFloat(2, 1, 100000),
         ];
     }
 }

@@ -18,11 +18,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $country = fake()->unique()->country();
+        $name = fake()->unique()->name();
 
         return [
-            'name' => $country,
-            'slug' => Str::slug($country),
+            'name' => $name,
+            'slug' => Str::slug($name),
             'position' => Category::max('position') + 1,
         ];
     }
