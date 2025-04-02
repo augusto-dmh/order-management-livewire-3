@@ -25,16 +25,55 @@
                                     <th class="px-6 py-3 text-left bg-gray-50">
                                     </th>
                                     <th class="px-6 py-3 text-left bg-gray-50">
-                                        <span class="text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">Name</span>
+                                        <button wire:click="setColumnSorting('name')" class="flex items-center text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">
+                                            <span>Name</span>
+                                            @if($columnSorting['columnName'] === 'name')
+                                                @if($columnSorting['sortingOrder'] === 'asc')
+                                                    <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L10 4.414l-3.293 3.293a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                @elseif($columnSorting['sortingOrder'] === 'desc')
+                                                    <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L10 15.586l3.293-3.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                @endif
+                                            @endif
+                                        </button>
                                     </th>
                                     <th class="px-6 py-3 text-left bg-gray-50">
                                         <span class="text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">Categories</span>
                                     </th>
                                     <th class="px-6 py-3 text-left bg-gray-50">
-                                        <span class="text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">Country</span>
+                                        <button wire:click="setColumnSorting('country_id')" class="flex items-center text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">
+                                            <span>Country</span>
+                                            @if($columnSorting['columnName'] === 'country_id')
+                                                @if($columnSorting['sortingOrder'] === 'asc')
+                                                    <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L10 4.414l-3.293 3.293a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                @elseif($columnSorting['sortingOrder'] === 'desc')
+                                                    <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L10 15.586l3.293-3.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                @endif
+                                            @endif
+                                        </button>
                                     </th>
                                     <th class="w-32 px-6 py-3 text-left bg-gray-50">
-                                        <span class="text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">Price</span>
+                                        <button wire:click="setColumnSorting('price')" class="flex items-center text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase">
+                                            <span>Price</span>
+                                            @if($columnSorting['columnName'] === 'price')
+                                                @if($columnSorting['sortingOrder'] === 'asc')
+                                                    <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L10 4.414l-3.293 3.293a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                @elseif($columnSorting['sortingOrder'] === 'desc')
+                                                    <svg class="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L10 15.586l3.293-3.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                @endif
+                                            @endif
+                                        </button>
                                     </th>
                                     <th class="px-6 py-3 text-left bg-gray-50">
                                     </th>

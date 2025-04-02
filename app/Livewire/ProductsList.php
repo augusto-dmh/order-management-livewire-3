@@ -25,10 +25,32 @@ class ProductsList extends Component
         ],
     ];
 
+    public $columnSorting = ['columnName' => null, 'sortingOrder' => null];
+
     public $categoriesPerProductToShow = 2;
 
     public ?Collection $categories = null;
     public ?Collection $countries = null;
+
+    public function setColumnSorting($columnName)
+    {
+        if ($columnName == $this->columnSorting['columnName']) {
+            if (is_null($this->columnSorting['sortingOrder'])) {
+                $this->columnSorting['sortingOrder'] = 'asc';
+                return;
+            }
+            if ($this->columnSorting['sortingOrder'] == 'asc') {
+                $this->columnSorting['sortingOrder'] = 'desc';
+                return;
+            }
+            $this->columnSorting['sortingOrder'] = null;
+            $this->columnSorting['columnName'] = null;
+            return;
+        }
+
+        $this->columnSorting['sortingOrder'] = 'asc';
+        $this->columnSorting['columnName'] = $columnName;
+    }
 
     public function updatedFilters()
     {
@@ -67,6 +89,9 @@ class ProductsList extends Component
             })
             ->when($this->searchColumns['price']['to'], function (Builder $q) {
                 $q->where('price', '<=', $this->searchColumns['price']['to'] * 100);
+            })
+            ->when(!is_null($this->columnSorting['columnName']), function (Builder $q) {
+                $q->orderBy($this->columnSorting['columnName'], $this->columnSorting['sortingOrder']);
             })
             ->paginate(10);
 
