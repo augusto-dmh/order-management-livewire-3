@@ -11,9 +11,17 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <div class="mb-4">
-                        <div class="mb-4">
+                        <div class="flex justify-between mb-4">
                             <x-primary-button wire:click="" type="button">
                                 Create Product
+                            </x-primary-button>
+
+                            <x-primary-button
+                                wire:click="deleteConfirm('deleteSelected')"
+                                type="button"
+                                class="bg-red-500 hover:bg-red-700 disabled:opacity-50"
+                                :disabled="empty($productsSelectedToBeDeletedIds)">
+                                Delete Selected
                             </x-primary-button>
                         </div>
                     </div>
@@ -100,7 +108,9 @@
                                 @foreach($products as $product)
                                     <tr class="bg-white" wire:key="product-{{ $product->id }}">
                                         <td class="px-4 py-2 text-sm leading-5 text-gray-900 whitespace-nowrap">
-                                            <input type="checkbox" value="{{ $product->id }}">
+                                            <input type="checkbox"
+                                                   wire:change="toggleProductsSelectedToBeDeletedIds({{ $product->id }})"
+                                                   value="{{ $product->id }}">
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             {{ $product->name }}
@@ -127,7 +137,7 @@
                                             <x-primary-button wire:click="">
                                                 Edit
                                             </x-primary-button>
-                                            <button wire:click="" class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
+                                            <button wire:click="deleteConfirm('delete', {{ $product->id }})" class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
                                                 Delete
                                             </button>
                                         </td>
