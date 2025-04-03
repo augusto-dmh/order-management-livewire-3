@@ -18,9 +18,11 @@
 
                             <x-primary-button
                                 wire:click="deleteConfirm('deleteSelected')"
+                                wire:loading.attr="disabled"
                                 type="button"
                                 class="bg-red-500 hover:bg-red-700 disabled:opacity-50"
-                                :disabled="empty($productsSelectedToBeDeletedIds)">
+                                :disabled="!$this->selectedProductsCount"
+                            >
                                 Delete Selected
                             </x-primary-button>
                         </div>
@@ -108,9 +110,7 @@
                                 @foreach($products as $product)
                                     <tr class="bg-white" wire:key="product-{{ $product->id }}">
                                         <td class="px-4 py-2 text-sm leading-5 text-gray-900 whitespace-nowrap">
-                                            <input type="checkbox"
-                                                   wire:change="toggleProductsSelectedToBeDeletedIds({{ $product->id }})"
-                                                   value="{{ $product->id }}">
+                                            <input type="checkbox" value="{{ $product->id }}" wire:model.live="selectedProducts">
                                         </td>
                                         <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
                                             {{ $product->name }}

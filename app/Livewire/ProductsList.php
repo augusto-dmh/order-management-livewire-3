@@ -33,7 +33,7 @@ class ProductsList extends Component
     public ?Collection $categories = null;
     public ?Collection $countries = null;
 
-    public array $productsSelectedToBeDeletedIds = [];
+    public array $selectedProducts = [];
 
     public function toggleColumnSorting(string $columnName): void
     {
@@ -49,27 +49,18 @@ class ProductsList extends Component
         }
     }
 
-    public function toggleProductsSelectedToBeDeletedIds(int $productId): void
+    public function getSelectedProductsCountProperty(): int
     {
-        if (isset($this->productsSelectedToBeDeletedIds[$productId])) {
-            unset($this->productsSelectedToBeDeletedIds[$productId]);
-            return;
-        }
-
-        $this->productsSelectedToBeDeletedIds[$productId] = $productId;
+        return count($this->selectedProducts);
     }
 
     public function deleteConfirm(string $method, $id = null): void
     {
-        if ($method === 'deleteSelected' && empty($this->productsSelectedToBeDeletedIds)) {
-            return;
-        }
-
         $this->dispatch('swal:confirm', [
             'type'   => 'warning',
             'title'  => 'Are you sure?',
             'text'   => $method === 'deleteSelected'
-                ? 'You are about to delete ' . count($this->productsSelectedToBeDeletedIds) . ' products.'
+                ? 'You are about to delete ' . count($this->selectedProducts) . ' products.'
                 : 'You are about to delete this product.',
             'id'     => $id,
             'method' => $method,
@@ -77,22 +68,21 @@ class ProductsList extends Component
     }
 
     #[On('delete')]
-    public function delete($id)
+    public function delete(int $id): void
     {
-        if (isset($this->productsSelectedToBeDeletedIds[$id])) {
-            unset($this->productsSelectedToBeDeletedIds[$id]);
-        }
+        $product = Product::findOrFail($id);
 
-        Product::findOrFail($id)->delete();
+        $product->delete();
     }
 
     #[On('deleteSelected')]
     public function deleteSelected()
     {
-        if (!empty($this->productsSelectedToBeDeletedIds)) {
-            Product::whereIn('id', array_values($this->productsSelectedToBeDeletedIds))->delete();
-            $this->reset('productsSelectedToBeDeletedIds');
-        }
+        $products = Product::whereIn('id', $this->selectedProducts)->get();
+
+        $products->each->delete();
+
+        $this->reset('selectedProducts');
     }
 
     public function updatedFilters()
