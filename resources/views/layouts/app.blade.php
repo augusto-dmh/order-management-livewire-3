@@ -43,9 +43,9 @@
                         title: event[0].title,
                         text: event[0].text,
                         icon: event[0].type,
-                        showCancelButton: true,
-                        confirmButtonColor: 'rgb(239 68 6)',
-                        confirmButtonText: 'Yes, delete it!'
+                        showCancelButton: event[0].showCancelButton ?? true,
+                        confirmButtonColor: event[0].confirmButtonColor || 'rgb(239 68 6)',
+                        confirmButtonText: event[0].confirmButtonText || 'Yes, delete it!'
                     })
                         .then((willDelete) => {
                             if (willDelete.isConfirmed) {

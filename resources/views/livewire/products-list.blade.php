@@ -12,19 +12,27 @@
 
                     <div class="mb-4">
                         <div class="flex justify-between mb-4">
-                            <x-primary-button wire:click="" type="button">
-                                Create Product
-                            </x-primary-button>
+                            <div>
+                                <x-primary-button wire:click="" type="button">
+                                    Create Product
+                                </x-primary-button>
 
-                            <x-primary-button
-                                wire:click="deleteConfirm('deleteSelected')"
-                                wire:loading.attr="disabled"
-                                type="button"
-                                class="bg-red-500 hover:bg-red-700 disabled:opacity-50"
-                                :disabled="!$this->selectedProductsCount"
-                            >
-                                Delete Selected
-                            </x-primary-button>
+                                <x-primary-button
+                                    wire:click="deleteConfirm('deleteSelected')"
+                                    wire:loading.attr="disabled"
+                                    type="button"
+                                    class="bg-red-500 hover:bg-red-700 disabled:opacity-50"
+                                    :disabled="!$this->selectedProductsCount"
+                                >
+                                    Delete Selected
+                                </x-primary-button>
+                            </div>
+
+                            <div>
+                                <x-primary-button wire:click="export('csv')">CSV</x-primary-button>
+                                <x-primary-button wire:click="export('xlsx')">XLSX</x-primary-button>
+                                <x-primary-button wire:click="export('pdf')">PDF</x-primary-button>
+                            </div>
                         </div>
                     </div>
 

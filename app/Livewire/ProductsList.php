@@ -2,15 +2,19 @@
 
 namespace App\Livewire;
 
+use App\Exports\ProductsExport;
 use App\Models\Country;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
-use Livewire\Attributes\Url;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProductsList extends Component
 {
@@ -34,6 +38,23 @@ class ProductsList extends Component
     public ?Collection $countries = null;
 
     public array $selectedProducts = [];
+
+    public function export(string $format): ?BinaryFileResponse
+    {
+        if (empty($this->selectedProducts)) {
+            $this->dispatch('swal:confirm', [
+                'type'   => 'info',
+                'title'  => 'No products selected.',
+                'confirmButtonColor' => '#3fc3ee',
+                'confirmButtonText' => 'Ok',
+                'showCancelButton' => false,
+            ]);
+            return null;
+        }
+        abort_if(! in_array($format, ['csv', 'xlsx', 'pdf']), Response::HTTP_NOT_FOUND);
+
+        return Excel::download(new ProductsExport($this->selectedProducts), 'products.' . $format);
+    }
 
     public function toggleColumnSorting(string $columnName): void
     {
