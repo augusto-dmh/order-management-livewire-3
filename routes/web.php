@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\OrdersList;
 use App\Livewire\ProductForm;
 use App\Livewire\ProductsList;
 use App\Livewire\CategoriesList;
@@ -24,7 +25,11 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware('auth')->group(function () {
     Route::view('profile', 'profile')->name('profile');
+
     Route::get('categories', CategoriesList::class)->name('categories.index');
+
+    Route::get('orders', OrdersList::class)->name('orders.index');
+
     Route::get('products', ProductsList::class)->name('products.index');
     Route::get('products/create', ProductForm::class)->name('products.create');
     Route::get('products/{product}', ProductForm::class)->name('products.edit');
