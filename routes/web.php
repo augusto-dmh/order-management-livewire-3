@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ProductForm;
 use App\Livewire\ProductsList;
 use App\Livewire\CategoriesList;
 use Illuminate\Support\Facades\Route;
@@ -21,16 +22,12 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
-
-Route::get('categories', CategoriesList::class)
-    ->middleware(['auth'])
-    ->name('categories.index');
-
-Route::get('products', ProductsList::class)
-    ->middleware(['auth'])
-    ->name('products.index');
+Route::middleware('auth')->group(function () {
+    Route::view('profile', 'profile')->name('profile');
+    Route::get('categories', CategoriesList::class)->name('categories.index');
+    Route::get('products', ProductsList::class)->name('products.index');
+    Route::get('products/create', ProductForm::class)->name('products.create');
+    Route::get('products/{product}', ProductForm::class)->name('products.edit');
+});
 
 require __DIR__ . '/auth.php';

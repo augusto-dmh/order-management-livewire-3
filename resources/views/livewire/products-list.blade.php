@@ -142,7 +142,7 @@
                                             ${{ number_format($product->price / 100, 2) }}
                                         </td>
                                         <td class="flex items-center justify-center gap-1 px-4 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
-                                            <x-primary-button wire:click="">
+                                            <x-primary-button href="{{ route('products.edit', $product) }}" wire:navigate>
                                                 Edit
                                             </x-primary-button>
                                             <button wire:click="deleteConfirm('delete', {{ $product->id }})" class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
