@@ -19,9 +19,9 @@
                     <div class="mb-4">
                         <div class="flex justify-between mb-4">
                             <div>
-                                <x-primary-button wire:click="" type="button">
+                                <a href="{{ route('products.create') }}" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700">
                                     Create Product
-                                </x-primary-button>
+                                </a>
 
                                 <x-primary-button
                                     wire:click="deleteConfirm('deleteSelected')"
@@ -148,9 +148,9 @@
                                             ${{ number_format($product->price / 100, 2) }}
                                         </td>
                                         <td class="flex items-center justify-center gap-1 px-4 py-4 text-sm leading-5 text-gray-900 whitespace-nowrap">
-                                            <x-primary-button href="{{ route('products.edit', $product) }}" wire:navigate>
+                                            <a href="{{ route('products.edit', $product) }}" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-gray-800 border border-transparent rounded-md hover:bg-gray-700">
                                                 Edit
-                                            </x-primary-button>
+                                            </a>
                                             <button wire:click="deleteConfirm('delete', {{ $product->id }})" class="px-4 py-2 text-xs text-red-500 uppercase bg-red-200 border border-transparent rounded-md hover:text-red-700 hover:bg-red-300">
                                                 Delete
                                             </button>
